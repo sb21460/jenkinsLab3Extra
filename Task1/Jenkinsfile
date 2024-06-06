@@ -8,13 +8,12 @@ pipeline{
         }
         stage("docker build"){
             steps{
-                docker build -t flask-app:latest flask-app
+                docker build -t flask-app:latest .
             }
         }
         stage("docker run"){
             steps{
                 docker run -d \
-                  -e MYSQL_ROOT_PASSWORD=password \
                   --name flask-app \
                   -p 5500:80 \
                   flask-app:latest
