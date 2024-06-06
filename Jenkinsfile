@@ -15,8 +15,9 @@ pipeline{
         }
         stage("run"){
             steps{
-                sh 'docker run -d --network new-network -p 80:80 --name nginx-container nginx-image'
                 sh 'docker run -d --network new-network --name flask-app flask-app-image'
+                sh 'docker run -d --network new-network -p 80:80 --name nginx-container nginx-image'
+                
             }
         }
     }
