@@ -1,22 +1,22 @@
 pipeline{
     agent any
     stages{
-        stage("docker clean up"){
+        stage("cleanup"){
             steps{
-                sh docker rm -f $(docker ps -a -q) || true
+                sh "docker rm -f $(docker ps -a -q) || true"
+                sh "docker network create new-network || true"
             }
         }
-        stage("docker build"){
+        stage("build"){
             steps{
-                sh docker build -t flask-app:latest .
+                sh "docker build -t ngnix-image -f Dockerfile.nginx ."
+                sh "docker build -t flask-app-image ."
             }
         }
-        stage("docker run"){
+        stage("run"){
             steps{
-                sh docker run -d \
-                  --name flask-app \
-                  -p 5500:80 \
-                  flask-app:latest
+                sh "docker run -d --network new-network -p 80:80 --name nginx-container nginx-image"
+                sh "docker run -d --network new-network --name flask-app-container flask-app-image"
             }
         }
     }
