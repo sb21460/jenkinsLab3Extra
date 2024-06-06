@@ -9,7 +9,7 @@ pipeline{
         }
         stage("build"){
             steps{
-                sh 'docker build -t ngnix-image -f Dockerfile.nginx .'
+                sh 'docker build -t nginx-image -f Dockerfile.nginx .'
                 sh 'docker build -t flask-app-image .'
             }
         }
