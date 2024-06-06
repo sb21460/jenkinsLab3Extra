@@ -1,1 +1,1 @@
-FIND nginx:latest
+FROM nginx:latest
