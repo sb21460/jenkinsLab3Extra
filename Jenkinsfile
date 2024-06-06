@@ -3,20 +3,20 @@ pipeline{
     stages{
         stage("cleanup"){
             steps{
-                sh "docker rm -f $(docker ps -a -q) || true"
-                sh "docker network create new-network || true"
+                sh 'docker rm -f $(docker ps -a -q) || true'
+                sh 'docker network create new-network || true'
             }
         }
         stage("build"){
             steps{
-                sh "docker build -t ngnix-image -f Dockerfile.nginx ."
-                sh "docker build -t flask-app-image ."
+                sh 'docker build -t ngnix-image -f Dockerfile.nginx .'
+                sh 'docker build -t flask-app-image .'
             }
         }
         stage("run"){
             steps{
-                sh "docker run -d --network new-network -p 80:80 --name nginx-container nginx-image"
-                sh "docker run -d --network new-network --name flask-app-container flask-app-image"
+                sh 'docker run -d --network new-network -p 80:80 --name nginx-container nginx-image'
+                sh 'docker run -d --network new-network --name flask-app-container flask-app-image'
             }
         }
     }
