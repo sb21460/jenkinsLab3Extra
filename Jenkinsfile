@@ -19,6 +19,11 @@ pipeline{
                 sh 'docker run -d --network new-network -p 80:80 --name nginx-container nginx-image'
                 
             }
+        stage("test"){
+            steps{
+                sh 'curl localhost'
+                
+            }
         }
     }
 }
